@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const API_TOKEN = process.env.API_TOKEN || '123456';
-const dbPath = './data/database.sqlite';
+const dbPath = './database.sqlite';
 
 app.use(cors()); // CORS needed for all routes
 
