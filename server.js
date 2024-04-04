@@ -1,68 +1,133 @@
 const express = require('express');
-const mysql = require('mysql');
+const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
+const API_TOKEN = process.env.API_TOKEN || '123456';
 
-// MySQL database connection
-const connection = mysql.createConnection({
-    host: '185.111.89.207', // Change this to your MySQL host
-    user: 'adamdien_grocery', // Change this to your MySQL username
-    password: 'reparetekmogyoro', // Change this to your MySQL password
-    database: 'adamdien_grocery' // Change this to your MySQL database name
-});
+app.use(cors()); // CORS needed for all routes
 
-connection.connect((err) => {
+// Delete existing SQLite file and create new one
+const dbPath = './data/database.sqlite';
+try {
+    fs.unlinkSync(dbPath);
+    console.log('Deleted existing SQLite file');
+} catch (err) {
+    console.error('Error deleting existing SQLite file:', err.message);
+}
+
+const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
-        console.error('Error connecting to MySQL database: ', err);
-        return;
+        console.error('Error connecting to database:', err.message);
+    } else {
+        console.log('Connected to the new database');
     }
-    console.log('Connected to MySQL database');
 });
 
-// Middleware to parse JSON bodies
-app.use(express.json());
-
-// API password
-const apiPassword = 'your_api_password'; // Change this to your desired API password
-
-// Middleware to check API authentication
-const authenticateAPI = (req, res, next) => {
-    const password = req.headers['x-api-password'] || req.body.apiPassword;
-    if (!password || password !== apiPassword) {
-        return res.status(401).json({ error: 'Unauthorized. Invalid API password.' });
+// Middleware to check API token
+const checkToken = (req, res, next) => {
+    const token = req.header('Authorization');
+    if (!token || token !== `Bearer ${API_TOKEN}`) {
+        return res.status(401).json({ error: 'Unauthorized' });
     }
     next();
 };
 
-// Apply authentication middleware to all routes
-app.use(authenticateAPI);
+app.use(checkToken);
 
-// Routes
-app.get('/items', (req, res) => {
-    connection.query('SELECT * FROM items', (error, results, fields) => {
-        if (error) {
-            console.error('Error executing MySQL query: ', error);
-            res.status(500).json({ error: 'Error fetching items from database' });
-            return;
+// Initialize tables
+db.serialize(() => {
+    db.run(`CREATE TABLE IF NOT EXISTS Products (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        description TEXT,
+        barcode TEXT
+    )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS Ingredients (
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        isVegan BOOLEAN,
+        isGlutenFree BOOLEAN,
+        isDairyFree BOOLEAN,
+        isNutFree BOOLEAN,
+        isVegetarian BOOLEAN,
+        isHalal BOOLEAN,
+        isKosher BOOLEAN
+    )`);
+
+    db.run(`CREATE TABLE IF NOT EXISTS ProductIngredients (
+        productId INTEGER,
+        ingredientId INTEGER,
+        FOREIGN KEY(productId) REFERENCES Products(id),
+        FOREIGN KEY(ingredientId) REFERENCES Ingredients(id)
+    )`);
+
+     // Mock-up data 
+     // TODO: Add more relevant data
+     db.run(`INSERT INTO Products (name) VALUES ('Product 11')`, (err) => {
+        if (err) {
+            console.error('Error inserting product:', err.message);
         }
-        res.json(results);
+    });
+
+    db.run(`INSERT INTO Products (name) VALUES ('Product 2')`, (err) => {
+        if (err) {
+            console.error('Error inserting product:', err.message);
+        }
+    });
+
+    db.run(`INSERT INTO Ingredients (name) VALUES ('Ingredient A')`, (err) => {
+        if (err) {
+            console.error('Error inserting ingredient:', err.message);
+        }
+    });
+
+    db.run(`INSERT INTO Ingredients (name) VALUES ('Ingredient B')`, (err) => {
+        if (err) {
+            console.error('Error inserting ingredient:', err.message);
+        }
+    });
+
+    // N-N relationship
+    // TODO: Add more real relationships
+    db.run(`INSERT INTO ProductIngredients (productId, ingredientId) VALUES (1, 1)`, (err) => {
+        if (err) {
+            console.error('Error establishing relationship:', err.message);
+        }
+    });
+
+    db.run(`INSERT INTO ProductIngredients (productId, ingredientId) VALUES (1, 2)`, (err) => {
+        if (err) {
+            console.error('Error establishing relationship:', err.message);
+        }
     });
 });
 
-app.post('/items', (req, res) => {
-    const { name, price } = req.body;
-    connection.query('INSERT INTO items (name, price) VALUES (?, ?)', [name, price], (error, results, fields) => {
-        if (error) {
-            console.error('Error executing MySQL query: ', error);
-            res.status(500).json({ error: 'Error inserting item into database' });
-            return;
+// Route to get all products
+app.get('/products', (req, res) => {
+    db.all(`SELECT * FROM Products`, (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
         }
-        res.json({ message: 'Item inserted successfully', itemId: results.insertId });
+        res.json(rows);
+    });
+});
+
+// Get product by barcode 
+app.get('/products/:barcode', (req, res) => {
+    const barcode = req.params.barcode;
+    db.get(`SELECT * FROM Products WHERE barcode = ?`, [barcode], (err, row) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(row);
     });
 });
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
