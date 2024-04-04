@@ -6,16 +6,18 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const API_TOKEN = process.env.API_TOKEN || '123456';
+const dbPath = './data/database.sqlite';
 
 app.use(cors()); // CORS needed for all routes
 
 // Delete existing SQLite file and create new one
-const dbPath = './data/database.sqlite';
-try {
-    fs.unlinkSync(dbPath);
-    console.log('Deleted existing SQLite file');
-} catch (err) {
-    console.error('Error deleting existing SQLite file:', err.message);
+if (fs.existsSync(dbPath)) {
+    try {
+        fs.unlinkSync(dbPath);
+        console.log('Deleted existing SQLite file');
+    } catch (err) {
+        console.error('Error deleting existing SQLite file:', err.message);
+    }
 }
 
 const db = new sqlite3.Database(dbPath, (err) => {
