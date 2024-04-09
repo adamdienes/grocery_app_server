@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const db = require('../database/database.js');
 
 // Route to get all products

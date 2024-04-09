@@ -1,6 +1,7 @@
+require('dotenv').config()
+
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
-require('dotenv').config()
 const dbPath = process.env.DB_PATH;
 
 // Delete existing SQLite file and create new one
