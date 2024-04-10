@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../database/database.js');
 
-// Route to get all products
+// Get all products
 router.get('/products', (req, res) => {
     db.all(`SELECT * FROM Products`, (err, rows) => {
         if (err) {
