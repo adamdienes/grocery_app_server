@@ -28,16 +28,55 @@ This is a Node.js server for the Grocery Scan App. It provides APIs for managing
     ```bash
     npm install
     ```
-
-## DigitalOcean Droplet connection
-
-Continuous deployment is live to a DigitalOcean Droplet, and the app is auto-updating relative to changes to the main branch.
-
-
+    
 ## Running the Server
 
 To start the Node.js server, run the following command:
 
 ```bash
 node server.js
-```
+ ```
+
+## API Base URL
+
+The base URL for all API requests is `localhost:PORT` or `https://grocery-app-server-8o3xk.ondigitalocean.app`
+
+## Authentication
+
+API requests must include a predefined _Authorization_ header with a valid token.
+
+- Key: `Authorization`
+- Value: `Bearer <API_TOKEN>`
+
+## API Routes
+
+### Get all products
+
+- **Route:** `/products`
+- **Method:** GET
+- **Description:** Retrieves all products from the database.
+
+### Get product by barcode
+
+- **Route:** `/product/:barcode`
+- **Method:** GET
+- **Description:** Retrieves a product from the database based on its barcode with ingredients list.
+- **Parameters:**
+  - `barcode`: The unique identifier of the product.
+ 
+
+## Error Messages
+
+- **401 Unauthorized: Missing Authorization header**
+  Returned when the request does not include an Authorization header.
+
+- **401 Unauthorized: Invalid token**
+  Returned when the provided token in the Authorization header is invalid.
+
+- **404 Product not found for barcode: [barcode]**
+  Returned when no product is found in the database for the specified barcode.
+
+
+## DigitalOcean Droplet connection
+
+Continuous deployment is live to a DigitalOcean Droplet, and the app is auto-updating relative to changes to the main branch.
