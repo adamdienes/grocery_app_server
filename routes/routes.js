@@ -4,13 +4,18 @@ const db = require('../database/database.js');
 
 // Get all products
 router.get('/products', (req, res) => {
-    db.all(`SELECT * FROM Products`, (err, rows) => {
+    db.all(`SELECT p.*, GROUP_CONCAT(i.name, ', ') AS ingredients
+            FROM Products p
+            LEFT JOIN ProductIngredients pi ON p.id = pi.productId
+            LEFT JOIN Ingredients i ON pi.ingredientId = i.id
+            GROUP BY p.id`, (err, rows) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
         res.json(rows);
     });
 });
+
 
 // Get product by barcode 
 router.get('/product/:barcode', (req, res) => {
