@@ -37,7 +37,7 @@ module.exports.seedDatabase = function(db) {
         });
 
         //6
-        db.run(`INSERT INTO Products (name, description, barcode, image_url) VALUES (?,?,?,?)`, ['Dm bio vegetable ravioli', 'Organic ravioli/Filled with peppers and aubergines/Tomato sauce with herbs/Ready in 1 minute/Microwaveable; The dmBio Vegetable Ravioli with Spicy Tomato Sauce is a quick and tasty Italian pasta dish with peppers and aubergines, also ideal for vegan diets. A tomato sauce flavoured with cauliflower and basil makes this a delicious dish that can be prepared in no time.', '3858890877984','https://media.dm-static.com/images/f_auto,q_auto,c_fit,h_440,w_500/v1711930417/products/pim/4066447503722-692085704/dmbio-bio-egytaletel-zoldsegekkel-toltott-olasz-ravioli'], (err) => {
+        db.run(`INSERT INTO Products (name, description, barcode, image_url) VALUES (?,?,?,?)`, ['Dm bio vegetable ravioli', 'Organic ravioli/Filled with peppers and aubergines/Tomato sauce with herbs/Ready in 1 minute/Microwaveable; The dmBio Vegetable Ravioli with Spicy Tomato Sauce is a quick and tasty Italian pasta dish with peppers and aubergines, also ideal for vegan diets. A tomato sauce flavoured with cauliflower and basil makes this a delicious dish that can be prepared in no time.', '4066447503722','https://media.dm-static.com/images/f_auto,q_auto,c_fit,h_440,w_500/v1711930417/products/pim/4066447503722-692085704/dmbio-bio-egytaletel-zoldsegekkel-toltott-olasz-ravioli'], (err) => {
             if (err) {
                 console.error('Error inserting product:', err.message);
             }
