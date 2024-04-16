@@ -2,10 +2,10 @@ module.exports.setupDatabase = function(db) {
     db.serialize(() => {
         db.run(`CREATE TABLE IF NOT EXISTS Products (
             id INTEGER PRIMARY KEY,
+            barcode TEXT UNIQUE,
             name TEXT,
             description TEXT,
-            image_url TEXT,
-            barcode TEXT
+            image_url TEXT
         )`);
 
         //Consumers may be allergic or have intolerance to other ingredients, but only the 14 allergens are required to be declared as allergens by food law.
