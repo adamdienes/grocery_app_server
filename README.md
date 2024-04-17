@@ -9,6 +9,8 @@ This is a Node.js server for the Grocery Scan App. It provides APIs for managing
 - Node.js installed on your system.
 - npm (Node Package Manager) installed on your system.
 
+[![Node.js CI](https://github.com/adamdienes/grocery_app_server/actions/workflows/node.js.yml/badge.svg)](https://github.com/adamdienes/grocery_app_server/actions/workflows/node.js.yml)
+
 ## Installation
 
 1. Clone the repository:
@@ -80,3 +82,7 @@ API requests must include a predefined _Authorization_ header with a valid token
 ## DigitalOcean Droplet connection
 
 Continuous deployment is live to a DigitalOcean Droplet, and the app is auto-updating relative to changes to the main branch.
+
+[![DigitalOcean Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg)](https://www.digitalocean.com/?refcode=032964bbbea)
+
+Made with ❤️ and JavaScript.
