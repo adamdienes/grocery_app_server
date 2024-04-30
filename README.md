@@ -15,29 +15,29 @@ This is a Node.js server for the Grocery Scan App. It provides APIs for managing
 
 1. Clone the repository:
 
-    ```bash
-    git clone <repository-url>
-    ```
+   ```bash
+   git clone <repository-url>
+   ```
 
 2. Navigate to the project directory:
 
-    ```bash
-    cd grocery-scan-app-server
-    ```
+   ```bash
+   cd grocery-scan-app-server
+   ```
 
 3. Install dependencies:
 
-    ```bash
-    npm install
-    ```
-    
+   ```bash
+   npm install
+   ```
+
 ## Running the Server
 
 To start the Node.js server, run the following command:
 
 ```bash
 node server.js
- ```
+```
 
 ## API Base URL
 
@@ -65,7 +65,6 @@ API requests must include a predefined _Authorization_ header with a valid token
 - **Description:** Retrieves a product from the database based on its barcode with ingredients list.
 - **Parameters:**
   - `barcode`: The unique identifier of the product.
- 
 
 ## Error Messages
 
@@ -78,11 +77,10 @@ API requests must include a predefined _Authorization_ header with a valid token
 - **404 Product not found for barcode: [barcode]**
   Returned when no product is found in the database for the specified barcode.
 
-
 ## DigitalOcean Droplet connection
 
 Continuous deployment is live to a DigitalOcean Droplet, and the app is auto-updating relative to changes to the main branch.
 
-[![DigitalOcean Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg)](https://www.digitalocean.com/?refcode=032964bbbea)
+[![DigitalOcean Badge](https://web-platforms.sfo2.cdn.digitaloceanspaces.com/WWW/Badge%201.svg)](https://www.digitalocean.com/?refcode=032964bbbea4)
 
 Made with ❤️ and JavaScript.
