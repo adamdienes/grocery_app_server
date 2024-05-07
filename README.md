@@ -41,7 +41,7 @@ node server.js
 
 ## API Base URL
 
-The base URL for all API requests is `localhost:PORT` or `https://grocery-app-server-8o3xk.ondigitalocean.app`
+The base URL for all API requests is `localhost:PORT` or `https://<PROJECT_ID>.ondigitalocean.app`
 
 ## Authentication
 
