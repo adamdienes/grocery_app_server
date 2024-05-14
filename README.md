@@ -31,6 +31,12 @@ This is a Node.js server for the Grocery Scan App. It provides APIs for managing
    npm install
    ```
 
+4. Make a copy of a `.env.example` file in the root directory and add your environment variables:
+
+   ```bash
+   copy .\.env.example .env
+   ```
+
 ## Running the Server
 
 To start the Node.js server, run the following command:
