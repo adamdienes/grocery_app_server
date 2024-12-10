@@ -1,8 +1,8 @@
-# Grocery Scan App Node.js Server
+# Shopify x Billingo invoicing
 
-This is a Node.js server for the Grocery Scan App. It provides APIs for managing grocery products using SQLite as the database.
+This is a custom Node.js server for integration between Shopify store and Billingo invoicing using webhooks.
 
-![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white) ![DigitalOcean](https://img.shields.io/badge/DigitalOcean-%230167ff.svg?style=for-the-badge&logo=digitalOcean&logoColor=white)
+![JavaScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![DigitalOcean](https://img.shields.io/badge/DigitalOcean-%230167ff.svg?style=for-the-badge&logo=digitalOcean&logoColor=white)
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ node server.js
 
 ## API Base URL
 
-The base URL for all API requests is `localhost:PORT` or `https://<PROJECT_ID>.ondigitalocean.app`
+The base URL for all API requests is `localhost:PORT` 
 
 ## Authentication
 
@@ -74,14 +74,8 @@ API requests must include a predefined _Authorization_ header with a valid token
 
 ## Error Messages
 
-- **401 Unauthorized: Missing Authorization header**
-  Returned when the request does not include an Authorization header.
+- **403 Unauthorized: Invalid token**: Returned when the provided token in the Authorization header is invalid.
 
-- **401 Unauthorized: Invalid token**
-  Returned when the provided token in the Authorization header is invalid.
-
-- **404 Product not found for barcode: [barcode]**
-  Returned when no product is found in the database for the specified barcode.
 
 ## DigitalOcean Droplet connection
 
